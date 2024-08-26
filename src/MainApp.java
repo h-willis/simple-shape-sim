@@ -1,8 +1,10 @@
+package src;
+
 import javax.swing.JFrame;
 import javax.swing.Timer;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import DrawingPanel;
+// import DrawingPanel;
 
 public class MainApp {
 

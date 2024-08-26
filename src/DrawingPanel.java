@@ -1,11 +1,12 @@
+package src;
+
 import javax.swing.JPanel;
-import Shapes.Ball;
-import Shapes.Shape;
+import src.Shapes.Ball;
+import src.Shapes.Shape;
 
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.util.ArrayList;
 
 public class DrawingPanel extends JPanel {
 
