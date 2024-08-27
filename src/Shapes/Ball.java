@@ -20,18 +20,18 @@ public class Ball extends Shape {
 
   public void updatePosition() {
     this.yPos += this.ySpeed;
-    if (this.yPos == this.maxY) {
+    if (this.yPos + this.size >= this.maxY || this.yPos <= 0) {
       this.ySpeed = -this.ySpeed;
     }
 
     this.xPos += this.xSpeed;
-    if (this.xPos == this.maxY) {
+    if (this.xPos + this.size >= this.maxX || this.xPos <= 0) {
       this.xSpeed = -this.xSpeed;
     }
   }
 
   public void draw(Graphics2D g2d) {
     g2d.setColor(this.colour);
-    g2d.drawOval(this.xPos, this.yPos, this.size, this.size);
+    g2d.fillOval(this.xPos, this.yPos, this.size, this.size);
   }
 }

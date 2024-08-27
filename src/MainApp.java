@@ -25,6 +25,7 @@ public class MainApp {
       public void actionPerformed(ActionEvent e) {
         panel.updateShapes(); // Update the positions of the shapes
         panel.repaint(); // Redraw the panel
+        frame.getToolkit().sync();
       }
     });
     timer.start();
