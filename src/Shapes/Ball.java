@@ -3,7 +3,6 @@ package src.Shapes;
 import java.awt.*;
 
 public class Ball extends Shape {
-  // position
   private Vector2D sizeVec;
 
   public Ball(Vector2D position, Vector2D speed, int size, Color colour) {
