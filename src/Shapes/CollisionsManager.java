@@ -50,15 +50,6 @@ public class CollisionsManager {
   }
 
   public static boolean hasCollided(Shape ball, Square square) {
-    // if (ball.position.x < square.bottomRight.x && ball.position.y >
-    // square.bottomRight.y) {
-    // return true;
-    // }
-    // if (ball.bottomRight.x > square.position.x && ball.bottomRight.y <
-    // square.position.y) {
-    // return true;
-    // }
-    // return false;
     // AABB
     // Check if there is no overlap on the x-axis
     if (ball.position.x > square.bottomRight.x || square.position.x > ball.bottomRight.x) {
@@ -79,6 +70,7 @@ public class CollisionsManager {
         // black ball white square collision
         if (squares.squares[w][h].colour == Color.BLACK) {
           if (CollisionsManager.hasCollided(blackBall, squares.squares[w][h])) {
+            // TODO this speed changing needs to be done based on which axies collided
             blackBall.speed = blackBall.speed.multiply(new Vector2D(-1, -1));
             squares.squares[w][h].colour = Color.WHITE;
           }
