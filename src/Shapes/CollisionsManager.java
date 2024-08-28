@@ -70,18 +70,6 @@ public class CollisionsManager {
     }
     // If neither condition is true, the rectangles overlap
     return true;
-
-    // if (rect1.topLeft.x > rect2.bottomRight.x || rect2.topLeft.x >
-    // rect1.bottomRight.x) {
-    // return false;
-    // }
-    // // Check if there is no overlap on the y-axis
-    // if (rect1.topLeft.y > rect2.bottomRight.y || rect2.topLeft.y >
-    // rect1.bottomRight.y) {
-    // return false;
-    // }
-    // // If neither condition is true, the rectangles overlap
-    // return true;
   }
 
   // this is gunna be super ineffecient and have planty of room for improvement
@@ -92,12 +80,12 @@ public class CollisionsManager {
         if (squares.squares[w][h].colour == Color.BLACK) {
           if (CollisionsManager.hasCollided(blackBall, squares.squares[w][h])) {
             blackBall.speed = blackBall.speed.multiply(new Vector2D(-1, -1));
-            squares.squares[w][h].colour = Color.BLACK;
+            squares.squares[w][h].colour = Color.WHITE;
           }
         } else {
           if (CollisionsManager.hasCollided(whiteBall, squares.squares[w][h])) {
-            blackBall.speed = whiteBall.speed.multiply(new Vector2D(-1, -1));
-            squares.squares[w][h].colour = Color.WHITE;
+            whiteBall.speed = whiteBall.speed.multiply(new Vector2D(-1, -1));
+            squares.squares[w][h].colour = Color.BLACK;
           }
         }
       }
