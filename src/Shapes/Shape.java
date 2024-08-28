@@ -3,11 +3,10 @@ package src.Shapes;
 import java.awt.*;
 
 public abstract class Shape {
-  protected int xPos = 0;
-  protected int yPos = 0;
+  protected Vector2D position;
+  protected Vector2D bottomRight;
   // velocity
-  protected int xSpeed;
-  protected int ySpeed;
+  protected Vector2D speed;
   // size
   protected int size;
   protected Color colour;

@@ -4,7 +4,7 @@ import javax.swing.JFrame;
 import javax.swing.Timer;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-// import DrawingPanel;
+import src.Settings;
 
 public class MainApp {
 
@@ -15,8 +15,8 @@ public class MainApp {
     JFrame frame = new JFrame("2D Simulation");
     DrawingPanel panel = new DrawingPanel();
 
+    frame.setSize(Settings.width, Settings.height);
     frame.add(panel);
-    frame.setSize(400, 400);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setVisible(true);
 

@@ -4,13 +4,15 @@ import java.awt.*;
 
 public class Ball extends Shape {
   // position
-  public Ball(int xPos, int yPos, int xSpeed, int ySpeed, int size, Color colour) {
-    this.xPos = xPos;
-    this.yPos = yPos;
-    this.xSpeed = xSpeed;
-    this.ySpeed = ySpeed;
+  private Vector2D sizeVec;
+
+  public Ball(Vector2D position, Vector2D speed, int size, Color colour) {
+    this.position = position;
+    this.speed = speed;
     this.size = size;
+    this.sizeVec = new Vector2D(this.size, this.size);
     this.colour = colour;
+    this.bottomRight = this.position.add(this.sizeVec);
   }
 
   public void setMaxPosition(int maxX, int maxY) {
@@ -18,20 +20,19 @@ public class Ball extends Shape {
     this.maxY = maxY;
   }
 
-  public void updatePosition() {
-    this.yPos += this.ySpeed;
-    if (this.yPos + this.size >= this.maxY || this.yPos <= 0) {
-      this.ySpeed = -this.ySpeed;
-    }
+  private void setPosition(Vector2D pos) {
+    this.position = pos;
+    this.bottomRight = this.position.add(this.sizeVec);
+  }
 
-    this.xPos += this.xSpeed;
-    if (this.xPos + this.size >= this.maxX || this.xPos <= 0) {
-      this.xSpeed = -this.xSpeed;
-    }
+  public void updatePosition() {
+    this.setPosition(this.position.add(this.speed));
+
+    CollisionsManager.manageWallCollisions(this);
   }
 
   public void draw(Graphics2D g2d) {
     g2d.setColor(this.colour);
-    g2d.fillOval(this.xPos, this.yPos, this.size, this.size);
+    g2d.fillOval(this.position.x, this.position.y, this.size, this.size);
   }
 }

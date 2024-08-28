@@ -3,6 +3,8 @@ package src;
 import javax.swing.JPanel;
 import src.Shapes.Ball;
 // import src.Shapes.Shape;
+import src.Shapes.CollisionsManager;
+import src.Shapes.Vector2D;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -17,24 +19,28 @@ public class DrawingPanel extends JPanel {
 
     private Ball blackBall;
     private Ball whiteBall;
+    private CollisionsManager collisionsHandler = new CollisionsManager();
 
     private void initShapes() {
-        this.blackBall = new Ball(200, 200, 1, 2, 20, Color.BLACK);
-        this.blackBall.setMaxPosition(400, 400);
+        this.blackBall = new Ball(new Vector2D(200, 200), new Vector2D(1, 2), 20, Color.BLACK);
+        this.blackBall.setMaxPosition(Settings.width, Settings.height);
 
-        this.whiteBall = new Ball(200, 200, 2, 1, 20, Color.WHITE);
-        this.whiteBall.setMaxPosition(400, 400);
+        this.whiteBall = new Ball(new Vector2D(250, 100), new Vector2D(2, 1), 20, Color.WHITE);
+        this.whiteBall.setMaxPosition(Settings.width, Settings.height);
     }
 
     private void drawGrid(Graphics2D g2d) {
         // int width = getWidth();
         // int height = getHeight();
 
-        // Draw vertical lines
-        g2d.drawLine(0, 0, 0, 400);
-        g2d.drawLine(0, 0, 400, 0);
-        g2d.drawLine(400, 0, 400, 400);
-        g2d.drawLine(0, 400, 400, 400);
+        // Left
+        g2d.drawLine(0, 0, 0, Settings.height);
+        // Top
+        g2d.drawLine(0, 0, Settings.width, 0);
+        // Right
+        g2d.drawLine(Settings.width, 0, Settings.width, Settings.height);
+        // Bottom
+        g2d.drawLine(0, Settings.height, Settings.width, Settings.height);
 
     }
 
@@ -51,5 +57,6 @@ public class DrawingPanel extends JPanel {
     public void updateShapes() {
         this.blackBall.updatePosition();
         this.whiteBall.updatePosition();
+        this.collisionsHandler.handleCollision(whiteBall, blackBall);
     }
 }
