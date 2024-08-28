@@ -5,6 +5,7 @@ import src.Shapes.Ball;
 // import src.Shapes.Shape;
 import src.Shapes.CollisionsManager;
 import src.Shapes.Square;
+import src.Shapes.Squares;
 import src.Shapes.Vector2D;
 
 import java.awt.Color;
@@ -20,39 +21,16 @@ public class DrawingPanel extends JPanel {
 
     private Ball blackBall;
     private Ball whiteBall;
-    private boolean squaresDrawn = false;
-    private int numSquaresWide;
-    private int numSquaresTall;
-    private Square[][] squares;
-    private CollisionsManager collisionsHandler = new CollisionsManager();
+    private Squares squares;
 
     private void initShapes() {
-        if (Settings.width % Settings.shapeScale != 0 || Settings.height % Settings.shapeScale != 0) {
-            System.err.println("Error: Canvas width and height must be multple of shapeScale");
-            System.exit(1);
-        }
+        this.squares = new Squares();
+        this.squares.initSquares();
 
-        this.numSquaresWide = Settings.width / Settings.shapeScale;
-        this.numSquaresTall = Settings.height / Settings.shapeScale;
-        squares = new Square[this.numSquaresWide][this.numSquaresTall];
-        for (int h = 0; h < this.numSquaresTall; h++) {
-            for (int w = 0; w < this.numSquaresWide; w++) {
-                Color sqColour;
-                if (h > numSquaresWide - 1 - w) {
-                    sqColour = Color.BLACK;
-                } else {
-                    sqColour = Color.WHITE;
-                }
-
-                squares[w][h] = new Square(new Vector2D(w * Settings.shapeScale, h * Settings.shapeScale),
-                        Settings.shapeScale, sqColour);
-            }
-        }
-
-        this.blackBall = new Ball(new Vector2D(200, 200), new Vector2D(1, 2), 20, Color.BLACK);
+        this.blackBall = new Ball(new Vector2D(100, 200), new Vector2D(1, 1), 20, Color.BLACK);
         this.blackBall.setMaxPosition(Settings.width, Settings.height);
 
-        this.whiteBall = new Ball(new Vector2D(250, 100), new Vector2D(2, 1), 20, Color.WHITE);
+        this.whiteBall = new Ball(new Vector2D(300, 200), new Vector2D(1, -1), 20, Color.WHITE);
         this.whiteBall.setMaxPosition(Settings.width, Settings.height);
     }
 
@@ -75,11 +53,7 @@ public class DrawingPanel extends JPanel {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
 
-        for (int h = 0; h < this.numSquaresTall; h++) {
-            for (int w = 0; w < this.numSquaresWide; w++) {
-                this.squares[w][h].draw(g2d);
-            }
-        }
+        this.squares.draw(g2d);
 
         this.blackBall.draw(g2d);
         this.whiteBall.draw(g2d);
@@ -89,7 +63,7 @@ public class DrawingPanel extends JPanel {
     public void updateShapes() {
         this.blackBall.updatePosition();
         this.whiteBall.updatePosition();
-        // CollisionsManager.manageBallSquareCollisions(this.blackBall, this.whiteBall,
-        // this.squares);
+        CollisionsManager.manageBallSquareCollisions(this.blackBall, this.whiteBall,
+                this.squares);
     }
 }
