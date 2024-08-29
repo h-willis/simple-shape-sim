@@ -27,10 +27,10 @@ public class DrawingPanel extends JPanel {
         this.squares = new Squares();
         this.squares.initSquares();
 
-        this.blackBall = new Ball(new Vector2D(100, 200), new Vector2D(3, 2), 20, Color.BLACK);
+        this.blackBall = new Ball(new Vector2D(100, 200), new Vector2D(3, 2), Settings.shapeScale, Color.BLACK);
         this.blackBall.setMaxPosition(Settings.width, Settings.height);
 
-        this.whiteBall = new Ball(new Vector2D(300, 200), new Vector2D(2, -3), 20, Color.WHITE);
+        this.whiteBall = new Ball(new Vector2D(300, 200), new Vector2D(2, -3), Settings.shapeScale, Color.WHITE);
         this.whiteBall.setMaxPosition(Settings.width, Settings.height);
     }
 
