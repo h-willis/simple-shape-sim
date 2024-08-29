@@ -72,22 +72,20 @@ public class CollisionsManager {
 
   // this is gunna be super ineffecient and have planty of room for improvement
   public static void manageBallSquareCollisions(Shape blackBall, Shape whiteBall, Squares squares) {
-    for (int w = 0; w < squares.numSquaresWide; w++) {
-      for (int h = 0; h < squares.numSquaresTall; h++) {
-        // black ball white square collision
-        if (squares.squares[w][h].colour == Color.BLACK) {
-          if (CollisionsManager.hasCollided(blackBall, squares.squares[w][h])) {
-            squares.squares[w][h].colour = Color.WHITE;
-            // TODO this speed changing needs to be done based on which axies collided
-            blackBall.speed = blackBall.speed
-                .multiply(CollisionsManager.getCollisionAxis(blackBall, squares.squares[w][h]));
-          }
-        } else {
-          if (CollisionsManager.hasCollided(whiteBall, squares.squares[w][h])) {
-            squares.squares[w][h].colour = Color.BLACK;
-            whiteBall.speed = whiteBall.speed
-                .multiply(CollisionsManager.getCollisionAxis(whiteBall, squares.squares[w][h]));
-          }
+    for (Square square : squares) {
+      // black ball white square collision
+      if (square.colour == Color.BLACK) {
+        if (CollisionsManager.hasCollided(blackBall, square)) {
+          square.colour = Color.WHITE;
+          // TODO this speed changing needs to be done based on which axies collided
+          blackBall.speed = blackBall.speed
+              .multiply(CollisionsManager.getCollisionAxis(blackBall, square));
+        }
+      } else {
+        if (CollisionsManager.hasCollided(whiteBall, square)) {
+          square.colour = Color.BLACK;
+          whiteBall.speed = whiteBall.speed
+              .multiply(CollisionsManager.getCollisionAxis(whiteBall, square));
         }
       }
     }

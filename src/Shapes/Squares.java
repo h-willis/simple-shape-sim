@@ -1,12 +1,16 @@
 package src.Shapes;
 
 import java.awt.*;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 import src.Settings;
 
 // gunna hold all the squares in the array
-public class Squares {
+public class Squares implements Iterable<Square> {
   public int numSquaresWide;
   public int numSquaresTall;
+  // TODO make an iterator function to go through all squares
+  // ... except java doesn't have native generator support
   public Square[][] squares;
 
   public void initSquares() {
@@ -34,10 +38,41 @@ public class Squares {
   }
 
   public void draw(Graphics2D g2d) {
+    // can't use iterator here because it iterates on the class itself
     for (int h = 0; h < this.numSquaresTall; h++) {
       for (int w = 0; w < this.numSquaresWide; w++) {
         this.squares[w][h].draw(g2d);
       }
+    }
+  }
+
+  @Override
+  public Iterator<Square> iterator() {
+    return new SquaresIterator();
+  }
+
+  private class SquaresIterator implements Iterator<Square> {
+    private int w = 0;
+    private int h = 0;
+
+    @Override
+    public boolean hasNext() {
+      return w < numSquaresWide && h < numSquaresTall;
+    }
+
+    @Override
+    public Square next() {
+      if (!hasNext()) {
+        throw new NoSuchElementException();
+      }
+
+      Square retSquare = squares[w][h];
+      w += 1;
+      if (w == numSquaresWide) {
+        w = 0;
+        h += 1;
+      }
+      return retSquare;
     }
   }
 }
