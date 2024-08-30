@@ -49,43 +49,45 @@ public class CollisionsManager {
     return true;
   }
 
-  public static boolean hasCollided(Shape ball, Square square) {
-    // AABB
-    // Check if there is no overlap on the x-axis
-    if (ball.position.x > square.bottomRight.x || square.position.x > ball.bottomRight.x) {
-      return false;
-    }
-    // Check if there is no overlap on the y-axis
-    if (ball.position.y > square.bottomRight.y || square.position.y > ball.bottomRight.y) {
-      return false;
-    }
-    // If neither condition is true, the rectangles overlap
-    return true;
-  }
-
-  public static Vector2D getCollisionAxis(Shape ball, Square square) {
-    if (ball.position.x < square.bottomRight.x || ball.bottomRight.x > square.position.x) {
+  public static Vector2D hasCollided(Ball ball, Square square) {
+    // mid point left x axis collision
+    if (ball.mpLeft.x > square.position.x && ball.mpLeft.x < square.bottomRight.x
+        && ball.mpLeft.y > square.position.y && ball.mpLeft.y < square.bottomRight.y) {
       return new Vector2D(-1, 1);
     }
-    return new Vector2D(0, -1);
+    // mid point right x axis collision
+    if (ball.mpRight.x > square.position.x && ball.mpRight.x < square.bottomRight.x
+        && ball.mpRight.y > square.position.y && ball.mpRight.y < square.bottomRight.y) {
+      return new Vector2D(-1, 1);
+    }
+    if (ball.mpTop.x > square.position.x && ball.mpTop.x < square.bottomRight.x
+        && ball.mpTop.y > square.position.y && ball.mpTop.y < square.bottomRight.y) {
+      return new Vector2D(1, -1);
+    }
+    if (ball.mpBottom.x > square.position.x && ball.mpBottom.x < square.bottomRight.x
+        && ball.mpBottom.y > square.position.y && ball.mpBottom.y < square.bottomRight.y) {
+      return new Vector2D(1, -1);
+    }
+    // no collisions
+    return null;
   }
 
   // this is gunna be super ineffecient and have planty of room for improvement
-  public static void manageBallSquareCollisions(Shape blackBall, Shape whiteBall, Squares squares) {
+  public static void manageBallSquareCollisions(Ball blackBall, Ball whiteBall, Squares squares) {
     for (Square square : squares) {
       // black ball white square collision
+      Vector2D reflectionVector;
       if (square.colour == Color.BLACK) {
-        if (CollisionsManager.hasCollided(blackBall, square)) {
+        reflectionVector = CollisionsManager.hasCollided(blackBall, square);
+        if (reflectionVector != null) {
           square.colour = Color.WHITE;
-          // TODO this speed changing needs to be done based on which axies collided
-          blackBall.speed = blackBall.speed
-              .multiply(CollisionsManager.getCollisionAxis(blackBall, square));
+          blackBall.speed = blackBall.speed.multiply(reflectionVector);
         }
       } else {
-        if (CollisionsManager.hasCollided(whiteBall, square)) {
+        reflectionVector = CollisionsManager.hasCollided(whiteBall, square);
+        if (reflectionVector != null) {
           square.colour = Color.BLACK;
-          whiteBall.speed = whiteBall.speed
-              .multiply(CollisionsManager.getCollisionAxis(whiteBall, square));
+          whiteBall.speed = whiteBall.speed.multiply(reflectionVector);
         }
       }
     }
