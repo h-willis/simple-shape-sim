@@ -4,10 +4,12 @@ import java.awt.*; // color
 
 public class Square extends Shape {
   private Vector2D sizeVec;
+  public Vector2D centre;
 
   public Square(Vector2D position, int size, Color colour) {
     this.position = position;
     this.size = size;
+    this.centre = this.position.add(new Vector2D(this.size / 2, this.size / 2));
     this.sizeVec = new Vector2D(this.size, this.size);
     this.colour = colour;
     this.bottomRight = this.position.add(this.sizeVec);

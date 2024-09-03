@@ -11,6 +11,7 @@ import src.Shapes.Vector2D;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.Random;
 
 public class DrawingPanel extends JPanel {
 
@@ -23,14 +24,31 @@ public class DrawingPanel extends JPanel {
     private Ball whiteBall;
     private Squares squares;
 
+    private Vector2D getRandomSpeed() {
+        Random random = new Random();
+        int randSpeedx = 0;
+        int randSpeedy = 0;
+        do {
+            // we dont want 0 speed
+            randSpeedx = random.nextInt(6);
+        } while (randSpeedx == 3);
+
+        do {
+            // we dont want 0 speed
+            randSpeedy = random.nextInt(6);
+        } while (randSpeedy == 3);
+
+        return new Vector2D(randSpeedx - 3, randSpeedy - 3);
+    }
+
     private void initShapes() {
         this.squares = new Squares();
         this.squares.initSquares();
 
-        this.blackBall = new Ball(new Vector2D(100, 200), new Vector2D(3, 2), Settings.shapeScale, Color.BLACK);
+        this.blackBall = new Ball(new Vector2D(100, 200), getRandomSpeed(), 10, Color.BLACK);
         this.blackBall.setMaxPosition(Settings.width, Settings.height);
 
-        this.whiteBall = new Ball(new Vector2D(300, 200), new Vector2D(2, -3), Settings.shapeScale, Color.WHITE);
+        this.whiteBall = new Ball(new Vector2D(300, 200), getRandomSpeed(), 10, Color.WHITE);
         this.whiteBall.setMaxPosition(Settings.width, Settings.height);
     }
 
