@@ -26,16 +26,18 @@ public class DrawingPanel extends JPanel {
 
     private Vector2D getRandomSpeed() {
         Random random = new Random();
+        int maxSpeed = 6;
         int randSpeedx = 0;
         int randSpeedy = 0;
+
         do {
             // we dont want 0 speed
-            randSpeedx = random.nextInt(6);
+            randSpeedx = random.nextInt(maxSpeed);
         } while (randSpeedx == 3);
 
         do {
             // we dont want 0 speed
-            randSpeedy = random.nextInt(6);
+            randSpeedy = random.nextInt(maxSpeed);
         } while (randSpeedy == 3);
 
         return new Vector2D(randSpeedx - 3, randSpeedy - 3);
